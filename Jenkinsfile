@@ -24,7 +24,7 @@ pipeline {
         stage('Build & Unit Test') {
             steps {
                 echo 'Building Java Web Application...'
-                sh 'mvn clean package -DskipTests=false'
+                sh '/usr/bin/mvn clean package -DskipTests=false'
             }
         }
 
