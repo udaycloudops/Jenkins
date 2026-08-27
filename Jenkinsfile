@@ -24,14 +24,14 @@ pipeline {
         stage('Build & Unit Test') {
             steps {
                 echo 'Building Java Web Application...'
-                sh 'mvn clean package -DskipTests=false'
+                sh '/usr/share/maven clean package -DskipTests=false'
             }
         }
 
         stage('SonarQube Code Analysis') {
             steps {
                 withSonarQubeEnv("${SONAR_SERVER}") {
-                    sh 'mvn sonar:sonar'
+                    sh '/usr/share/maven sonar:sonar'
                 }
             }
         }
