@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         APP_NAME         = 'demo-web-app'
-        DOCKER_HUB_USER  = 'your-dockerhub-username' // Change to your Docker Hub username
+        DOCKER_HUB_USER  = 'udaycloudops' // Change to your Docker Hub username
         IMAGE_NAME       = "${DOCKER_HUB_USER}/${APP_NAME}"
         IMAGE_TAG        = "${BUILD_NUMBER}"
         SONAR_SERVER     = 'SonarQubeServer' // Defined in Jenkins System Settings
@@ -17,7 +17,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/your-username/demo-web-app.git'
+                git branch: 'main', url: 'https://github.com/udaycloudops/Jenkins.git'
             }
         }
 
