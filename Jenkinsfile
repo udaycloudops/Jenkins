@@ -2,9 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven-3.9.0'     // Automatically configures M2_HOME and adds 'mvn' to PATH
-        jdk 'JDK-17'            // Automatically sets JAVA_HOME and updates java binaries
-        nodejs 'Node-20'        // Automatically sets node and npm in PATH
+        jdk 'JDK-21'            // Automatically sets JAVA_HOME and updates java binaries
     }
 
     parameters {
