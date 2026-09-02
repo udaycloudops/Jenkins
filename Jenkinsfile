@@ -50,9 +50,37 @@ pipeline {
             }
         }
 
+        // --- GROOVY SCRIPT EXAMPLE STAGE ---
         stage('Quality Gate') {
             steps {
-                echo 'Checking code quality and static analysis...'
+                echo 'Evaluating quality metrics with inline Groovy...'
+                
+                script {
+                    // 1. Groovy Variable Definitions & Calculations
+                    def codeCoveragePercentage = 85
+                    def minimumThreshold = 80
+                    def statusList = ['Linting Passed', 'Security Scan Passed', 'Coverage Check Passed']
+                    
+                    // 2. Groovy Control Flow (If/Else)
+                    if (codeCoveragePercentage >= minimumThreshold) {
+                        echo "SUCCESS: Code coverage is ${codeCoveragePercentage}%, which meets the threshold of ${minimumThreshold}%."
+                        env.QUALITY_GATE_STATUS = "PASSED"
+                    } else {
+                        echo "FAILURE: Code coverage is ${codeCoveragePercentage}%, below threshold of ${minimumThreshold}%."
+                        env.QUALITY_GATE_STATUS = "FAILED"
+                        error("Quality Gate failed due to low coverage!") // Fails the pipeline
+                    }
+
+                    // 3. Groovy Loops & Collection Manipulation
+                    echo "Summary of Quality Checks:"
+                    statusList.each { checkItem ->
+                        echo " - Check status: ${checkItem}"
+                    }
+
+                    // 4. Using Native Java/Groovy Classes (e.g., Dates)
+                    def now = new Date()
+                    echo "Quality Gate verified at: ${now.format('yyyy-MM-dd HH:mm:ss')}"
+                }
             }
         }
 
