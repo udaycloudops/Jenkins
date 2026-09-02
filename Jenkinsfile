@@ -47,7 +47,6 @@ pipeline {
                 echo 'RUN_TESTS parameter is checked. Running automated tests...'
             }
         }
-        }
 
         stage('Quality Gate') {
             steps {
