@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'APP_VERSION', defaultValue: 'V1.0', description: 'Version of the application to build')
+        choice(name: 'TARGET_ENV', choices: ['DEV', 'QA', 'STAGING', 'PROD'], description: 'Select the target deployment environment')
+        booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Check this to run automated tests')
+    }
+
     environment{
         APP_NAME = "MY-FIRST-APP"
         APP_VERSION = "V1.0"
@@ -34,9 +40,13 @@ pipeline {
         }
 
         stage('Test') {
-            steps {
-                echo 'Running automated tests...'
+            when {
+                expression { return params.RUN_TESTS == true }
             }
+            steps {
+                echo 'RUN_TESTS parameter is checked. Running automated tests...'
+            }
+        }
         }
 
         stage('Quality Gate') {
