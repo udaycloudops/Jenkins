@@ -24,7 +24,11 @@ pipeline {
         stage('Build & Unit Test') {
             steps {
                 echo 'Building Java Web Application...'
-                sh '/usr/bin/mvn clean package -DskipTests=false'
+                sh '''
+                    export JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64
+                    export PATH=$JAVA_HOME/bin:$PATH
+                    mvn clean package -DskipTests=false
+                '''
             }
         }
 
