@@ -97,9 +97,33 @@ pipeline {
         }
     }
 
+    // --- POST ACTIONS SECTION ---
     post {
+        // Runs regardless of the build status (Success, Failure, or Aborted)
         always {
-            echo 'Pipeline execution completed.'
+            echo "=== [ALWAYS] Pipeline execution finished for Job: ${env.JOB_NAME} #${env.BUILD_NUMBER} ==="
+            echo "Cleaning up workspace dynamic files..."
+            sh 'rm -rf build_output || true'
+        }
+
+        // Runs ONLY if the pipeline completed with a SUCCESS status
+        success {
+            echo "=== [SUCCESS] Pipeline executed successfully! ==="
+            echo "Sending success notification for ${env.APP_NAME} build #${env.BUILD_NUMBER}..."
+            // Example action: Trigger downstream job or send Slack/Email success alert
+        }
+
+        // Runs ONLY if the pipeline completed with a FAILURE status
+        failure {
+            echo "=== [FAILURE] Pipeline failed! ==="
+            echo "Sending failure alert to team on Slack/Email..."
+            echo "Failed during job: ${env.JOB_NAME} - Build URL: ${env.BUILD_URL}"
+        }
+
+        // Runs ONLY if the pipeline was manually canceled/stopped by a user
+        aborted {
+            echo "=== [ABORTED] Pipeline was manually canceled by user or timed out! ==="
+            echo "Build #${env.BUILD_NUMBER} was stopped before finishing."
         }
     }
 }
