@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven-3.9.0'     // Automatically configures M2_HOME and adds 'mvn' to PATH
+        jdk 'JDK-17'            // Automatically sets JAVA_HOME and updates java binaries
+        nodejs 'Node-20'        // Automatically sets node and npm in PATH
+    }
+
     parameters {
         string(name: 'APP_VERSION', defaultValue: 'V1.0', description: 'Version of the application to build')
         choice(name: 'TARGET_ENV', choices: ['DEV', 'QA', 'STAGING', 'PROD'], description: 'Select the target deployment environment')
