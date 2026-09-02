@@ -5,6 +5,10 @@ pipeline {
         APP_NAME = "MY-FIRST-APP"
         APP_VERSION = "V1.0"
         TARGET_ENV = "DEV"
+
+        GIT_REPO_URL = 'https://github.com/udaycloudops/Jenkins.git'
+        GIT_BRANCH   = 'main'
+        GIT_CREDENTIALS_ID = 'eed31d32-38eb-420e-b7d5-1bbe74ed104a'
     }
 
     stages {
@@ -15,6 +19,11 @@ pipeline {
                 echo "Jenkins Build Number: ${env.BUILD_NUMBER}"
                 echo "Jenkins URL: ${env.JENKINS_URL}"
                 echo 'Checking out source code from repository...'
+                 git branch: "${env.GIT_BRANCH}",
+                     credentialsId: "${env.GIT_CREDENTIALS_ID}",
+                     url: "${env.GIT_REPO_URL}"
+                    
+                     echo 'Source code checked out successfully.'
             }
         }
 
